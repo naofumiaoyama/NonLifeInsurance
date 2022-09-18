@@ -3,103 +3,69 @@ Contract ER
 ```puml
 @startuml
 entity "CarMaster" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-     # TypeId:  [FK(TypeMaster,Id)]
-    Name: nvarchar(256)
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+     # type_id:  [FK(TypeMaster,id)]
+    name: varchar(256)
 }
 
 entity "TypeMaster" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    TypeGroup: nvarchar(10)
-    TypeName: nvarchar(10)
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    type_group: varchar(10)
+    type_name: varchar(10)
 }
 
 entity "InsuranceMaster" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    Code: nvarchar(20)
-    Name: nvarchar(256)
-    # TypeId:  [FK(TypeMaster,Id)]
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    product_code: varchar(20)
+    name: varchar(256)
+    # type_id:  [FK(TypeMaster,id)]
 }
 
 entity "Contracts" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    # IsuranceId: [FK(Insurance,Id)]
-    PolicyNumber: nvarchar(20)
-    Amount: decimal
-    Rate: decimal
-    Premium: decimal
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    # insurance_id: [FK(Insurance,id)]
+    policy_number: varchar(20)
+    amount: decimal
+    rate: decimal
+    premium: decimal
 }
 
-entity "CarInsurances" {
-    + Id: int [PK]
+entity "Insurances" {
+    + id: int [PK]
     ==
-    # InsuranceMasterId: [FK(InsuranceMaster,Id)]
-    # PersonId: [FK(Persons,Id)]
-    # CarId: [FK(Cars,Id)]
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
-}
-
-entity "FireInsurances" {
-    + Id: int [PK]
-    ==
-    # InsuranceMasterId: [FK(InsuranceMaster,Id)]
-    # PersonId: [FK(Persons,Id)]
-    # BuildingId: [FK(Cars,Id)]
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    # insurance_master_id: [FK(InsuranceMaster,id)]
+    # person_id: [FK(Persons,id)]
+    # building_id: [FK(Buildings,id)]
+    # car_id: [FK(Cars,id)]
 }
 
 
 entity "Persons" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    FirstName: nvarchar(20)
-    MiddleName: nvarchar(20)
-    LastName: nvarchar(20)
-    # TypeId:  [FK(TypeMaster,Id)]
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    first_name: varchar(20)
+    middle_name: varchar(20)
+    last_name: varchar(20)
+    # TypeId:  [FK(TypeMaster,id)]
+
 }
 
 entity "Addresses" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    # PersonId: int [FK(Persons,Id)]
-    # OrganizationId: int [FK(OrganizationMaster,Id)]
-    # BuildingId: int [FK(Buildings,Id)]
-    ZipCode: nvarchar(20)
-    PrefectureCode: nvarchar(10)
-    CityWardName: nvarchar(50)
-    Street: nvarchar(50)
-    BuildingName: nvarchar(50)
-    RoomNumber: nvarchar(50)
+    # PersonId: int [FK(Persons,id)]
+    # OrganizationId: int [FK(OrganizationMaster,id)]
+    # BuildingId: int [FK(Buildings,id)]
+    ZipCode: varchar(20)
+    PrefectureCode: varchar(10)
+    CityWardName: varchar(50)
+    Street: varchar(50)
+    BuildingName: varchar(50)
+    RoomNumber: varchar(50)
     CreateUserId: int
     UpdateUserId: int
     CreateDateTime: datetime2
@@ -107,9 +73,9 @@ entity "Addresses" {
 }
 
 entity "Organizations" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    Name: nvarchar(256)
+    Name: varchar(256)
     CreateUserId: int
     UpdateUserId: int
     CreateDateTime: datetime2
@@ -117,10 +83,10 @@ entity "Organizations" {
 }
 
 entity "Cars" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    # PersonId: int [FK(Persons,Id)]
-    # CarMasterId: int [FK(CarMaster,Id)]
+    # PersonId: int [FK(Persons,id)]
+    # CarMasterId: int [FK(CarMaster,id)]
     CreateUserId: int
     UpdateUserId: int
     CreateDateTime: datetime2
@@ -128,10 +94,10 @@ entity "Cars" {
 }
 
 entity "Buildings" {
-    + Id: int [PK]
+    + id: int [PK]
     ==
-    # PersonId: int [FK(Persons,Id)]
-    Name:  nvarchar(256)
+    # PersonId: int [FK(Persons,id)]
+    Name:  varchar(256)
     CreateUserId: int
     UpdateUserId: int
     CreateDateTime: datetime2
