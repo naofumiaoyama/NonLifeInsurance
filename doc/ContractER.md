@@ -3,29 +3,37 @@ Contract ER
 ```puml
 @startuml
 entity "CarMaster" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
      # type_id:  [FK(TypeMaster,id)]
     name: varchar(256)
+    vehicle_model: varchar(20)
 }
 
 entity "TypeMaster" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
     type_group: varchar(10)
     type_name: varchar(10)
 }
 
 entity "InsuranceMaster" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
     product_code: varchar(20)
     name: varchar(256)
-    # type_id:  [FK(TypeMaster,id)]
+    # insurance_type_id:  [FK(TypeMaster,id)]
+}
+
+entity "OrganizationMaster" {
+    + id: ULID [PK]
+    ==
+    name: varchar(256)
+    # type_id: [FK(TypeMaster,id)]
 }
 
 entity "Contracts" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
     # insurance_id: [FK(Insurance,id)]
     policy_number: varchar(20)
@@ -35,73 +43,57 @@ entity "Contracts" {
 }
 
 entity "Insurances" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
     # insurance_master_id: [FK(InsuranceMaster,id)]
     # person_id: [FK(Persons,id)]
     # building_id: [FK(Buildings,id)]
+    # organization_id: [FK(,id)]
     # car_id: [FK(Cars,id)]
 }
 
-
 entity "Persons" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
     first_name: varchar(20)
     middle_name: varchar(20)
     last_name: varchar(20)
-    # TypeId:  [FK(TypeMaster,id)]
+    # person_type_id:  [FK(TypeMaster,id)]
 
 }
 
 entity "Addresses" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
-    # PersonId: int [FK(Persons,id)]
-    # OrganizationId: int [FK(OrganizationMaster,id)]
-    # BuildingId: int [FK(Buildings,id)]
-    ZipCode: varchar(20)
-    PrefectureCode: varchar(10)
-    CityWardName: varchar(50)
-    Street: varchar(50)
-    BuildingName: varchar(50)
-    RoomNumber: varchar(50)
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    # person_id: ULID [FK(Persons,id)]
+    # organization_id: ULID [FK(OrganizationMaster,id)]
+    # building_id: ULID [FK(Buildings,id)]
+    zipcode: varchar(20)
+    prefecture_code: varchar(10)
+    city_ward_name: varchar(50)
+    street: varchar(50)
+    building_name: varchar(50)
+    room_number: varchar(50)
 }
 
 entity "Organizations" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
-    Name: varchar(256)
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    name: varchar(256)
 }
 
 entity "Cars" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
-    # PersonId: int [FK(Persons,id)]
-    # CarMasterId: int [FK(CarMaster,id)]
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    # person_id: ULID [FK(Persons,id)]
+    # car_master_id: ULID [FK(CarMaster,id)]
 }
 
 entity "Buildings" {
-    + id: int [PK]
+    + id: ULID [PK]
     ==
-    # PersonId: int [FK(Persons,id)]
-    Name:  varchar(256)
-    CreateUserId: int
-    UpdateUserId: int
-    CreateDateTime: datetime2
-    UpdateDateTime: datetime2
+    # person_id: ULID [FK(Persons,id)]
+    name: varchar(256)
 }
 
 
