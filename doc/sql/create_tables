@@ -1,0 +1,148 @@
+DROP TABLE IF EXISTS type_master;
+CREATE TABLE type_master (
+    id uuid DEFAULT uuid_generate_v4 (),
+    group_name_level_1  VARCHAR(256) NOT NULL,
+    group_name_level_2  VARCHAR(256) NOT NULL,
+    group_name_level_3  VARCHAR(256) NOT NULL,
+    name VARCHAR(256) NOT NULL,
+    value1 VARCHAR(256) NOT NULL,
+    value2 VARCHAR(256) DEFAULT NULL,
+    value3 VARCHAR(256) DEFAULT NULL,
+    PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS car_master;
+CREATE TABLE car_master (
+    id uuid DEFAULT uuid_generate_v4 (),
+    car_type_id uuid DEFAULT uuid_generate_v4 (),
+    name VARCHAR(256) NOT NULL,
+    vehicle_model VARCHAR(256) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (car_type_id) REFERENCES type_master(id)
+);
+
+DROP TABLE IF EXISTS insurance_master;
+CREATE TABLE insurance_master (
+    id uuid DEFAULT uuid_generate_v4 (),
+    insurance_type_id uuid DEFAULT uuid_generate_v4 (), 
+    name VARCHAR(256) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (insurance_type_id) REFERENCES type_master(id)
+);
+
+DROP TABLE IF EXISTS organization_master;
+CREATE TABLE organization_master (
+    id uuid DEFAULT uuid_generate_v4 (),
+    insurance_type_id uuid DEFAULT uuid_generate_v4 (), 
+    name VARCHAR(256) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (insurance_type_id) REFERENCES type_master(id)
+);
+ */
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id uuid DEFAULT uuid_generate_v4 (),
+  user_type_id uuid DEFAULT uuid_generate_v4 (),
+  email varchar(200) DEFAULT NULL,
+  username varchar(45) DEFAULT NULL,
+  first_name varchar(45) DEFAULT NULL,
+  last_name varchar(45) DEFAULT NULL,
+  hashed_password varchar(200) DEFAULT NULL,
+  is_active boolean DEFAULT NULL,
+  PRIMARY KEY (id)
+--   FOREIGN KEY (user_type_id) REFERENCES type_master(id)
+);
+
+DROP TABLE IF EXISTS buildings;
+CREATE TABLE buildings (
+    id uuid DEFAULT uuid_generate_v4 (),
+    user_id uuid DEFAULT uuid_generate_v4 (), 
+    name VARCHAR(256) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+DROP TABLE IF EXISTS organizations;
+CREATE TABLE organizations (
+    id uuid DEFAULT uuid_generate_v4 (),
+    name VARCHAR(256) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS cars;
+CREATE TABLE cars (
+    id uuid DEFAULT uuid_generate_v4 (),
+    user_id uuid DEFAULT uuid_generate_v4 (), 
+    car_master_id uuid DEFAULT uuid_generate_v4 (), 
+    named_insured_type_id uuid DEFAULT uuid_generate_v4 (), 
+    drivers_of_vehicle_for_coverage_type_id uuid DEFAULT uuid_generate_v4 (), 
+    first_year_registration_date date,
+    name VARCHAR(256) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (car_master_id) REFERENCES car_master(id),
+    FOREIGN KEY (named_insured_type_id) REFERENCES type_master(id),
+    FOREIGN KEY (drivers_of_vehicle_for_coverage_type_id) REFERENCES type_master(id)
+);
+
+DROP TABLE IF EXISTS insurances;
+CREATE TABLE insurances (
+    id uuid DEFAULT uuid_generate_v4 (),
+    insurance_master_id uuid DEFAULT uuid_generate_v4 (), 
+    user_id uuid DEFAULT uuid_generate_v4 (), 
+    building_id uuid DEFAULT uuid_generate_v4 (),
+    organization_id uuid DEFAULT uuid_generate_v4 (),
+    car_id uuid DEFAULT uuid_generate_v4 (),
+    PRIMARY KEY (id),
+    FOREIGN KEY (insurance_master_id) REFERENCES insurance_master(id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (building_id) REFERENCES buildings(id),
+    FOREIGN KEY (organization_id) REFERENCES organizations(id),
+    FOREIGN KEY (car_id) REFERENCES cars(id)
+);
+
+DROP TABLE IF EXISTS contracts;
+CREATE TABLE contracts (
+    id uuid DEFAULT uuid_generate_v4 (),
+    insurance_id uuid DEFAULT uuid_generate_v4 (), 
+    policy_number VARCHAR(20) NOT NULL,
+    amount DECIMAL,
+    rate DECIMAL,
+    premium DECIMAL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (insurance_id) REFERENCES insurances(id)
+);
+ */
+DROP TABLE IF EXISTS addresses;
+CREATE TABLE addresses (
+    id uuid DEFAULT uuid_generate_v4 (),
+    organization_id uuid DEFAULT uuid_generate_v4 (), 
+    building_id uuid DEFAULT uuid_generate_v4 (), 
+    postal_code VARCHAR(20) NOT NULL,
+    prefecture_code VARCHAR(10) NOT NULL,
+    city_ward_name VARCHAR(50) NOT NULL,
+    street VARCHAR(50) NOT NULL,
+    building_name VARCHAR(50) NOT NULL,
+    room_number VARCHAR(50) NOT NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (organization_id) REFERENCES organizations(id),
+    FOREIGN KEY (building_id) REFERENCES buildings(id)
+);
+
+
+
+
+
+DROP TABLE IF EXISTS type_master;
+DROP TABLE IF EXISTS car_master;
+DROP TABLE IF EXISTS insurance_master;
+DROP TABLE IF EXISTS organization_master;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS buildings;
+DROP TABLE IF EXISTS organizations;
+DROP TABLE IF EXISTS cars;
+DROP TABLE IF EXISTS insurances;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS addresses;

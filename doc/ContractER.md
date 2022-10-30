@@ -1,74 +1,83 @@
-Contract ER
+Contract ERcar_master
 
 ```puml
 @startuml
-entity "CarMaster" {
-    + id: ULID [PK]
+entity "car_master" {
+    + id: UUID [PK]
     ==
-     # type_id:  [FK(TypeMaster,id)]
+     # car_type_id:  [FK(type_master,id)]
     name: varchar(256)
-    vehicle_model: varchar(20)
+    vehicle_model: varchar(256)
 }
 
-entity "TypeMaster" {
-    + id: ULID [PK]
+entity "type_master" {
+    + id: UUID [PK]
     ==
-    type_group: varchar(10)
-    type_name: varchar(10)
+    group_name_level_1: varchar(256)
+    group_name_level_2: varchar(256)
+    group_name_level_2: varchar(256)
+    name: varchar(256)
+    value1: varchar(256)
+    value2: varchar(256)
+    value3: varchar(256)
 }
 
-entity "InsuranceMaster" {
-    + id: ULID [PK]
+entity "insurance_master" {
+    + id: UUID [PK]
     ==
+    # insurance_type_id:  [FK(type_master,id)]
     product_code: varchar(20)
     name: varchar(256)
-    # insurance_type_id:  [FK(TypeMaster,id)]
+
 }
 
-entity "OrganizationMaster" {
-    + id: ULID [PK]
+entity "organization_master" {
+    + id: UUID [PK]
     ==
     name: varchar(256)
-    # type_id: [FK(TypeMaster,id)]
+    # organization_type_id: [FK(type_master,id)]
 }
 
-entity "Contracts" {
-    + id: ULID [PK]
+entity "contracts" {
+    + id: UUID [PK]
     ==
-    # insurance_id: [FK(Insurance,id)]
+    # insurance_id: [FK(insurances,id)]
     policy_number: varchar(20)
     amount: decimal
     rate: decimal
     premium: decimal
 }
 
-entity "Insurances" {
-    + id: ULID [PK]
+entity "insurances" {
+    + id: UUID [PK]
     ==
-    # insurance_master_id: [FK(InsuranceMaster,id)]
-    # person_id: [FK(Persons,id)]
-    # building_id: [FK(Buildings,id)]
-    # organization_id: [FK(,id)]
-    # car_id: [FK(Cars,id)]
+    # insurance_master_id: [FK(insurance_master,id)]
+    # user_id: [FK(users,id)]
+    # building_id: [FK(buildings,id)]
+    # organization_id: [FK(Organizaions,id)]
+    # car_id: [FK(cars,id)]
 }
 
-entity "Persons" {
-    + id: ULID [PK]
+entity "users" {
+    + id: UUID [PK]
     ==
+    # user_type_id:  [FK(type_master,id)]
+    email: varchar(200) DEFAULT NULL,
+    username varchar(45) DEFAULT NULL,
     first_name: varchar(20)
     middle_name: varchar(20)
     last_name: varchar(20)
-    # person_type_id:  [FK(TypeMaster,id)]
-
+    hashed_password varchar(200) DEFAULT NULL,
+    is_active boolean DEFAULT NULL,
 }
 
-entity "Addresses" {
-    + id: ULID [PK]
+entity "addresses" {
+    + id: UUID [PK]
     ==
-    # person_id: ULID [FK(Persons,id)]
-    # organization_id: ULID [FK(OrganizationMaster,id)]
-    # building_id: ULID [FK(Buildings,id)]
-    zipcode: varchar(20)
+    # user_id: UUID [FK(users,id)]
+    # organization_id: UUID [FK(organization_master,id)]
+    # building_id: UUID [FK(buildings,id)]
+    postal_code: varchar(20)
     prefecture_code: varchar(10)
     city_ward_name: varchar(50)
     street: varchar(50)
@@ -76,23 +85,31 @@ entity "Addresses" {
     room_number: varchar(50)
 }
 
-entity "Organizations" {
-    + id: ULID [PK]
+entity "organizations" {
+    + id: UUID [PK]
     ==
     name: varchar(256)
 }
 
-entity "Cars" {
-    + id: ULID [PK]
+entity "cars" {
+    + id: UUID [PK]
     ==
-    # person_id: ULID [FK(Persons,id)]
-    # car_master_id: ULID [FK(CarMaster,id)]
+    # user_id: UUID [FK(users,id)]
+    # car_master_id: UUID [FK(car_master,id)]
+    # named_insured_type_id:  [FK(type_master,id)]
+    # drivers_of_vehicle_for_coverage_type_id: [FK(type_master,id)]
+    first_year_registration_date: date
+    purpose_of_use_of_car
+    annual_mileage: int
+    named_insure_birthday: date
+    drivers_license_color: varchar(50)
+
 }
 
-entity "Buildings" {
-    + id: ULID [PK]
+entity "buildings" {
+    + id: UUID [PK]
     ==
-    # person_id: ULID [FK(Persons,id)]
+    # user_id: UUID [FK(users,id)]
     name: varchar(256)
 }
 
