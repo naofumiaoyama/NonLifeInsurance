@@ -6,18 +6,20 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { makeStyles } from '@mui/material/styles';
+import axios from "axios";
+import { color } from '@mui/system';
 
 function User(){    
   const BASE_URL = 'http://localhost:8000/'
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch(BASE_URL + 'user/get_all')
+    axios.get(BASE_URL + 'user')
       .then(response => {
-        const json = response.json()
+        const json = response.data
         console.log(json);
-        if (response.ok) {
+        if (response.data) {
           return json
         }
         throw response
@@ -40,18 +42,19 @@ function User(){
     is_active: boolean;
   }
 
+
   return (
     <div>
       <h1>User List</h1>
     
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} size="small" aria-label="a dense table">
-          <TableHead>
+          <TableHead style={{ backgroundColor:'Blue'}}>
             <TableRow>
-              <TableCell align="left">username</TableCell>
-              <TableCell align="left">firstname</TableCell>
-              <TableCell align="left">lastname</TableCell>
-              <TableCell align="left">email</TableCell>
+              <TableCell align="left" style={{color:'white'}}>username</TableCell>
+              <TableCell align="left" style={{color:'white'}}>firstname</TableCell>
+              <TableCell align="left" style={{color:'white'}}>lastname</TableCell>
+              <TableCell align="left" style={{color:'white'}}>email</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

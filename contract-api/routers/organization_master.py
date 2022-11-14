@@ -2,32 +2,23 @@ import uuid
 from auth.oauth2 import get_current_user
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from db.database import engine, SessionLocal,get_db
-import db.models
+from db.database import engine, SessionLocal, get_db
+from db.db_organization_master import create_new_organizaton_master, get_all
 from fastapi import Depends, APIRouter
 from typing import Optional
 from routers.schemas import OrganizationMaster
-import sys
-sys.path.append("..")
-
 
 router = APIRouter(
-    prefix="/organization_master",
-    tags=["organization_master"],
-    responses={404: {"description": "Not found"}}
+    prefix="/organizationmaster",
+    tags=["organizationmaster"],
 )
 
-@router.post("/")
-async def create_organization_master(organization_master: OrganizationMaster,
-                                     user: dict = Depends(get_current_user),
-                                     db: Session = Depends(get_db)):
-    """ if user is None:
-        raise get_user_exception() """
-    organization_master_model = models.OrganizationMaster()
-    organization_master_model.id = gen_uuid()
-    organization_master_model.name = organization_master.name
-    organization_master_model.insurance_type_id = organization_master.insurance_type_id
+@router.get('')
+async def all_oraganization_masters(db: Session = Depends(get_db)):
+    return await get_all(db)
 
-    db.add(organization_master_model)
-    db.flush()
-    db.commit()
+
+@router.post("/")
+async def create_oraganization_master(organization_master: OrganizationMaster, db: Session = Depends(get_db)):
+
+    await create_new_organizaton_master(organization_master, db)

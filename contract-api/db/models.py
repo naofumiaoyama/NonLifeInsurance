@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from .database import Base
 
+
 class DbTypeMaster(Base):
     __tablename__ = "type_master"
 
@@ -39,7 +40,7 @@ class InsuranceMaster(Base):
  """
 
 
-class DbUsers(Base):
+class DbUser(Base):
     __tablename__ = "users"
 
     id = Column(UUID(as_uuid=True), primary_key=True)
@@ -56,14 +57,14 @@ class DbOrganizationMaster(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True)
     name = Column(String)
-    insurance_type_id = Column(UUID(as_uuid=True), primary_key=True)
+   # insurance_type_id = Column(UUID(as_uuid=True), primary_key=True)
 
 
-class DbAddresses(Base):
+class DbAddress(Base):
     __tablename__ = "addresses"
 
     id = Column(UUID(as_uuid=True), primary_key=True)
-    organization_id = Column(UUID(as_uuid=False), primary_key=True)
+    #organization_id = Column(UUID(as_uuid=False), primary_key=True)
     postal_code = Column(String)
     prefecture_code = Column(String)
     city_ward_name = Column(String)

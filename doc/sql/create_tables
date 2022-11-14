@@ -33,10 +33,10 @@ CREATE TABLE insurance_master (
 DROP TABLE IF EXISTS organization_master;
 CREATE TABLE organization_master (
     id uuid DEFAULT uuid_generate_v4 (),
-    insurance_type_id uuid DEFAULT uuid_generate_v4 (), 
+    --insurance_type_id uuid DEFAULT uuid_generate_v4 (), 
     name VARCHAR(256) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (insurance_type_id) REFERENCES type_master(id)
+    --FOREIGN KEY (insurance_type_id) REFERENCES type_master(id)
 );
  */
 

@@ -1,4 +1,3 @@
-import uuid
 from pydantic import BaseModel
 from datetime import datetime
 from typing import List
@@ -15,7 +14,6 @@ class TypeMaster(BaseModel):
 
 
 class OrganizationMaster(BaseModel):
-    insurance_type: TypeMaster
     name: str
 
 
@@ -35,4 +33,3 @@ class Address(BaseModel):
     street: str
     building_name: str
     room_number: str
-
