@@ -2,8 +2,8 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import List
 
-
 class TypeMaster(BaseModel):
+    id: str
     group_name_level_1: str
     group_name_level_2: str
     group_name_level_3: str
@@ -14,10 +14,19 @@ class TypeMaster(BaseModel):
 
 
 class OrganizationMaster(BaseModel):
+    id: str
     name: str
 
 
+class CarMaster(BaseModel):
+    id: str
+    name: str    
+    car_type_id: str
+    vehicle_model: str
+
+
 class User(BaseModel):
+    id: str
     email: str
     username: str
     first_name: str
@@ -27,6 +36,7 @@ class User(BaseModel):
 
 
 class Address(BaseModel):
+    id: str
     postal_code: str
     prefecture_code: str
     city_ward_name: str

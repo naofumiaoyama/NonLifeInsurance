@@ -36,7 +36,6 @@ function OrganizatiomMaster(){
       console.log(error);
     })
   }
-
   
   useEffect(() => {
     get_all();
@@ -52,6 +51,7 @@ function OrganizatiomMaster(){
 
       get_all();
   }
+
 
   // テキストボックスの値が変更された時Stateを更新する
   const onChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +71,7 @@ function OrganizatiomMaster(){
         <Table sx={{ minWidth: 500 }} size="small" aria-label="a dense table">
           <TableHead style={{ backgroundColor:'Blue',}}>
             <TableRow>
-              <TableCell align="left" style={{color:'white'}}>name</TableCell>             
+              <TableCell align="left" style={{color:'white'}}>name</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

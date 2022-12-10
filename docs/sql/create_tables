@@ -1,3 +1,6 @@
+select * from organization_master
+
+
 DROP TABLE IF EXISTS type_master;
 CREATE TABLE type_master (
     id uuid DEFAULT uuid_generate_v4 (),
@@ -35,10 +38,9 @@ CREATE TABLE organization_master (
     id uuid DEFAULT uuid_generate_v4 (),
     --insurance_type_id uuid DEFAULT uuid_generate_v4 (), 
     name VARCHAR(256) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
     --FOREIGN KEY (insurance_type_id) REFERENCES type_master(id)
 );
- */
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
@@ -113,7 +115,7 @@ CREATE TABLE contracts (
     PRIMARY KEY (id),
     FOREIGN KEY (insurance_id) REFERENCES insurances(id)
 );
- */
+
 DROP TABLE IF EXISTS addresses;
 CREATE TABLE addresses (
     id uuid DEFAULT uuid_generate_v4 (),

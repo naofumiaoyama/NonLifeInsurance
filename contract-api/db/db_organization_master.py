@@ -4,7 +4,6 @@ from routers.schemas import OrganizationMaster
 from sqlalchemy.orm.session import Session
 from .database import gen_uuid
 
-
 async def get_all(db):
     organizationMasters = db.query(DbOrganizationMaster).all()    
     if not organizationMasters:
@@ -13,7 +12,7 @@ async def get_all(db):
     return organizationMasters
 
 
-async def create_new_organizaton_master(organization_master: OrganizationMaster, db: Session):
+async def create_new_organization_master(organization_master: OrganizationMaster, db: Session):
     new_organization_master = DbOrganizationMaster(
         id=gen_uuid(),
         name=organization_master.name
@@ -22,8 +21,13 @@ async def create_new_organizaton_master(organization_master: OrganizationMaster,
     db.flush()
     db.commit()
 
+async def remove_organization_master_byId(organization_master: OrganizationMaster, db: Session):
+    found_organization_master = db.query(DbOrganizationMaster).filter_by(id=organization_master.id).first()
+    db.delete(found_organization_master)
+    db.flush()
+    db.commit()
 
-def get_organization_master_by_name(db: Session, name: str):
+async def get_organization_master_by_name(db: Session, name: str):
     organization_master = db.query(DbOrganizationMaster).filter(
         DbOrganizationMaster.name == name).first()
     if not organization_master:

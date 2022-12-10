@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from db import models
 from db.database import engine
 from auth import authentication
-from routers import user, address, type_master, organization_master
+from routers import user, address, type_master, organization_master, car_master
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -13,6 +13,7 @@ app.include_router(user.router)
 app.include_router(address.router)
 app.include_router(type_master.router)
 app.include_router(organization_master.router)
+app.include_router(car_master.router)
 app.include_router(authentication.router)
 
 origins = [

@@ -4,7 +4,6 @@ from routers.schemas import Address
 from sqlalchemy.orm.session import Session
 from .database import gen_uuid
 
-
 async def create_new_address(address: Address, db):
     address_model = DbAddress(
         id=gen_uuid(),
@@ -25,5 +24,5 @@ async def get_all(db):
     addresses = db.query(DbAddress).all()
     if not addresses:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with username {username} not found')
+                            detail=f'Adress is not found')
     return addresses

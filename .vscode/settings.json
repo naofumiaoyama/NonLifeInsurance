@@ -1,0 +1,5 @@
+{
+  "python.analysis.extraPaths": [
+    "./contract-api/db"
+  ]
+}

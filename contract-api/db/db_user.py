@@ -5,7 +5,6 @@ from sqlalchemy.orm.session import Session
 from .hashing import Hash
 from .database import gen_uuid, get_db
 
-
 async def create_new_user(user: User, db):
     new_user = DbUser(
         id=gen_uuid(),
@@ -25,11 +24,11 @@ async def get_all(db):
     users = db.query(DbUser).all()
     if not users:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with username {username} not found')
+                            detail=f'db not found')
     return users
 
 
-def get_user_by_username(username: str, db):
+async def get_user_by_username(username: str, db):
     user = db.query(DbUser).filter(DbUser.username == username).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
